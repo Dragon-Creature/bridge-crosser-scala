@@ -64,21 +64,34 @@ function App() {
   let resultRender = <div></div>;
   if (result !== undefined) {
     resultRender = (
-      <div>
-        <p>Total travel time</p>
-        <p>{result.total_travel_time}</p>
-        {result.bridge_results.map((bridge) => (
-          <div>
+      <div className={"Result"}>
+        <div className={"Bridge"}>
+          <div className={"Bridge-Container"}>
             <p>Total travel time</p>
-            <p>{bridge.total_travel_time}</p>
-            <p>Number of hikers crossed</p>
-            <p>{bridge.number_of_hikers_crossed}</p>
-            <p>Id of hikers</p>
-            <p>{bridge.id_of_hikers}</p>
-            <p>Length in feet</p>
-            <p>{bridge.length_in_feet}</p>
+            <p>{result.total_travel_time}</p>
+            <div className={"Result-Container"}>
+              {result.bridge_results.map((bridge, idx) => (
+                <div className={"Result-Container-item"} key={idx}>
+                  <div className={"Bridge-Container"}>
+                    <p>Bridge {idx + 1}</p>
+                    <div>
+                      <p>Total travel time</p>
+                      <p>{bridge.total_travel_time}</p>
+                      <p>Number of hikers crossed</p>
+                      <p>{bridge.number_of_hikers_crossed}</p>
+                      <p>Id of hikers</p>
+                      {bridge.id_of_hikers.map((id, idx) => (
+                        <p>{id}</p>
+                      ))}
+                      <p>Length in feet</p>
+                      <p>{bridge.length_in_feet}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-        ))}
+        </div>
       </div>
     );
   }

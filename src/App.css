@@ -1,3 +1,20 @@
+div.Result {
+  display: flex;
+  justify-content: center;
+}
+
+div.Result-Container {
+  flex-direction: row;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+div.Result-Container-item {
+  margin: 1em;
+  padding: 1em;
+  border: black 2px solid;
+}
+
 div.Bridges {
   display: flex;
   flex-direction: row;

@@ -61,7 +61,7 @@ func (re *Rest) PostCalculateCrossing(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Printf("%+v\n", err)
 		RespondError(w, model.Error{
-			HttpCode: http.StatusUnprocessableEntity,
+			HttpCode: http.StatusInternalServerError,
 			Message:  "unable to create response",
 		})
 		return
@@ -70,7 +70,7 @@ func (re *Rest) PostCalculateCrossing(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Printf("%+v\n", err)
 		RespondError(w, model.Error{
-			HttpCode: http.StatusUnprocessableEntity,
+			HttpCode: http.StatusInternalServerError,
 			Message:  "unable to write response",
 		})
 		return
