@@ -2,14 +2,14 @@ package model
 
 type CrossingRequest struct {
 	Bridges []Bridge `json:"bridges"`
-	Hikers  []Hiker  `json:"hikers"`
 }
 
 type CrossingResponse struct {
 }
 
 type Bridge struct {
-	LengthInFeet int `json:"length_in_feet"`
+	LengthInFeet float64 `json:"length_in_feet"`
+	Hikers       []Hiker `json:"hikers"`
 }
 
 type Hiker struct {
