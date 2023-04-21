@@ -5,7 +5,10 @@ import (
 	"sort"
 )
 
-func CalculateCrossing(request model.CrossingRequest) *model.CrossingResponse {
+type Service struct {
+}
+
+func (s *Service) CalculateCrossing(request model.CrossingRequest) model.CrossingResponse {
 	//It doesn't matter if they go all the way back or one bridge at a time.
 	//Always send the fastest as company when someone crosses the bridge, to increase round trip back.
 	totalMinutesOfTravel := float64(0)
@@ -61,7 +64,7 @@ func CalculateCrossing(request model.CrossingRequest) *model.CrossingResponse {
 		request.Bridges[i].Hikers = hikers
 		bridgeResults = append(bridgeResults, bridgeResult)
 	}
-	return &model.CrossingResponse{
+	return model.CrossingResponse{
 		TotalTravelTime: totalMinutesOfTravel,
 		BridgeResults:   bridgeResults,
 	}

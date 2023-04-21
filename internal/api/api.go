@@ -2,6 +2,7 @@ package api
 
 import (
 	"git.ssns.se/git/frozendragon/bridge-crosser-scala/internal/rest"
+	"git.ssns.se/git/frozendragon/bridge-crosser-scala/internal/service"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/pkg/errors"
@@ -11,7 +12,13 @@ import (
 func Start() error {
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
-	r.Post("/api/calculate_crossing", rest.PostCalculateCrossing)
+
+	s := &service.Service{}
+	re := &rest.Rest{
+		Service: s,
+	}
+
+	r.Post("/api/calculate_crossing", re.PostCalculateCrossing)
 	fileServer := http.FileServer(http.Dir("./build/"))
 	r.Handle("/*", fileServer)
 	err := http.ListenAndServe(":8080", r)

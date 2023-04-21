@@ -5,6 +5,11 @@ install: lint
 lint:
 	npm run prettier:fix
 
+dependencies:
+	go mod tidy
+	go install github.com/matryer/moq@latest
+	npm install
+
 run:
 	go run ./cmd
 

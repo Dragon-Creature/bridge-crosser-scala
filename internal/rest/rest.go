@@ -10,10 +10,14 @@ import (
 	"net/http"
 )
 
-func PostCalculateCrossing(w http.ResponseWriter, r *http.Request) {
+type Rest struct {
+	Service service.Interfaces
+}
+
+func (re *Rest) PostCalculateCrossing(w http.ResponseWriter, r *http.Request) {
 	data, err := io.ReadAll(r.Body)
 	if err != nil {
-		fmt.Printf("%+v", err)
+		fmt.Printf("%+v\n", err)
 		RespondError(w, model.Error{
 			HttpCode: http.StatusInternalServerError,
 			Message:  "unable to read body",
@@ -23,7 +27,7 @@ func PostCalculateCrossing(w http.ResponseWriter, r *http.Request) {
 	var request model.CrossingRequest
 	err = json.Unmarshal(data, &request)
 	if err != nil {
-		fmt.Printf("%+v", err)
+		fmt.Printf("%+v\n", err)
 		RespondError(w, model.Error{
 			HttpCode: http.StatusBadRequest,
 			Message:  "unable to parse body",
@@ -38,10 +42,10 @@ func PostCalculateCrossing(w http.ResponseWriter, r *http.Request) {
 		})
 		return
 	}
-	response := service.CalculateCrossing(request)
+	response := re.Service.CalculateCrossing(request)
 	data, err = json.Marshal(response)
 	if err != nil {
-		fmt.Printf("%+v", err)
+		fmt.Printf("%+v\n", err)
 		RespondError(w, model.Error{
 			HttpCode: http.StatusUnprocessableEntity,
 			Message:  "unable to create response",
@@ -50,7 +54,7 @@ func PostCalculateCrossing(w http.ResponseWriter, r *http.Request) {
 	}
 	_, err = w.Write(data)
 	if err != nil {
-		fmt.Printf("%+v", err)
+		fmt.Printf("%+v\n", err)
 		RespondError(w, model.Error{
 			HttpCode: http.StatusUnprocessableEntity,
 			Message:  "unable to write response",
@@ -60,7 +64,7 @@ func PostCalculateCrossing(w http.ResponseWriter, r *http.Request) {
 }
 
 func RespondError(w http.ResponseWriter, err model.Error) {
-	fmt.Printf("%+v", err)
+	fmt.Printf("%+v\n", err)
 	data, callErr := json.Marshal(err)
 	if callErr != nil {
 		fmt.Printf("%+v", err)

@@ -7,7 +7,9 @@ import (
 )
 
 func TestCalculateCrossing(t *testing.T) {
-	response := CalculateCrossing(model.CrossingRequest{
+	service := Service{}
+
+	actual := service.CalculateCrossing(model.CrossingRequest{
 		Bridges: []model.Bridge{
 			{
 				LengthInFeet: 100,
@@ -91,18 +93,19 @@ func TestCalculateCrossing(t *testing.T) {
 			},
 		},
 	}
-	assert.InDelta(t, expected.TotalTravelTime, response.TotalTravelTime, float64EqualityThreshold)
-	assert.Equal(t, len(expected.BridgeResults), len(response.BridgeResults))
-	for i, _ := range response.BridgeResults {
-		assert.InDelta(t, expected.BridgeResults[i].TotalTravelTime, response.BridgeResults[i].TotalTravelTime, float64EqualityThreshold)
-		assert.InDelta(t, expected.BridgeResults[i].LengthInFeet, response.BridgeResults[i].LengthInFeet, float64EqualityThreshold)
-		assert.Equal(t, expected.BridgeResults[i].NumberOfHikersCrossed, response.BridgeResults[i].NumberOfHikersCrossed)
-		assert.ElementsMatch(t, expected.BridgeResults[i].IDOfHikers, response.BridgeResults[i].IDOfHikers)
+	assert.InDelta(t, expected.TotalTravelTime, actual.TotalTravelTime, float64EqualityThreshold)
+	assert.Equal(t, len(expected.BridgeResults), len(actual.BridgeResults))
+	for i, _ := range actual.BridgeResults {
+		assert.InDelta(t, expected.BridgeResults[i].TotalTravelTime, actual.BridgeResults[i].TotalTravelTime, float64EqualityThreshold)
+		assert.InDelta(t, expected.BridgeResults[i].LengthInFeet, actual.BridgeResults[i].LengthInFeet, float64EqualityThreshold)
+		assert.Equal(t, expected.BridgeResults[i].NumberOfHikersCrossed, actual.BridgeResults[i].NumberOfHikersCrossed)
+		assert.ElementsMatch(t, expected.BridgeResults[i].IDOfHikers, actual.BridgeResults[i].IDOfHikers)
 	}
 }
 
 func TestCalculateCrossingSingleHiker(t *testing.T) {
-	response := CalculateCrossing(model.CrossingRequest{
+	service := Service{}
+	actual := service.CalculateCrossing(model.CrossingRequest{
 		Bridges: []model.Bridge{
 			{
 				LengthInFeet: 100,
@@ -154,12 +157,12 @@ func TestCalculateCrossingSingleHiker(t *testing.T) {
 			},
 		},
 	}
-	assert.InDelta(t, expected.TotalTravelTime, response.TotalTravelTime, float64EqualityThreshold)
-	assert.Equal(t, len(expected.BridgeResults), len(response.BridgeResults))
-	for i, _ := range response.BridgeResults {
-		assert.InDelta(t, expected.BridgeResults[i].TotalTravelTime, response.BridgeResults[i].TotalTravelTime, float64EqualityThreshold)
-		assert.InDelta(t, expected.BridgeResults[i].LengthInFeet, response.BridgeResults[i].LengthInFeet, float64EqualityThreshold)
-		assert.Equal(t, expected.BridgeResults[i].NumberOfHikersCrossed, response.BridgeResults[i].NumberOfHikersCrossed)
-		assert.ElementsMatch(t, expected.BridgeResults[i].IDOfHikers, response.BridgeResults[i].IDOfHikers)
+	assert.InDelta(t, expected.TotalTravelTime, actual.TotalTravelTime, float64EqualityThreshold)
+	assert.Equal(t, len(expected.BridgeResults), len(actual.BridgeResults))
+	for i, _ := range actual.BridgeResults {
+		assert.InDelta(t, expected.BridgeResults[i].TotalTravelTime, actual.BridgeResults[i].TotalTravelTime, float64EqualityThreshold)
+		assert.InDelta(t, expected.BridgeResults[i].LengthInFeet, actual.BridgeResults[i].LengthInFeet, float64EqualityThreshold)
+		assert.Equal(t, expected.BridgeResults[i].NumberOfHikersCrossed, actual.BridgeResults[i].NumberOfHikersCrossed)
+		assert.ElementsMatch(t, expected.BridgeResults[i].IDOfHikers, actual.BridgeResults[i].IDOfHikers)
 	}
 }
