@@ -76,8 +76,9 @@ function App() {
     <div className="App">
       {errorMessage}
       {resultRender}
+      <div className={'Bridges'}>
       {bridges.map((bridge, idx) => (
-        <div key={bridge.id}>
+        <div className={'Bridge'} key={bridge.id}>
           <p>Length in feet</p>
           <input
             type={"text"}
@@ -88,9 +89,9 @@ function App() {
           />
           <button onClick={() => createHiker(bridge, idx)}>Add Hiker</button>
           {bridge.hikers.map((hiker, idy) => (
-            <div>
+            <div className={'Hiker'}>
               <p>ID</p>
-              <input type={"text"} value={hiker.id} />
+              <input type={"text"} value={hiker.id} readOnly={true} />
               <p>Speed feet in minutes</p>
               <input
                 type={"text"}
@@ -103,9 +104,11 @@ function App() {
           ))}
         </div>
       ))}
-
-      <button onClick={createBridge}>Add Bridge</button>
-      <button onClick={Submit}>Submit</button>
+      </div>
+      <div className={'Control-Buttons'}>
+        <button onClick={createBridge}>Add Bridge</button>
+        <button onClick={Submit}>Submit</button>
+      </div>
     </div>
   );
 }
