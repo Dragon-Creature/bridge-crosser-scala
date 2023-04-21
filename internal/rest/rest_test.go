@@ -13,7 +13,7 @@ import (
 	"testing"
 )
 
-func TestPostCalculateCrossingError(t *testing.T) {
+func TestPostCalculateCrossing(t *testing.T) {
 	s := &service.InterfacesMock{
 		CalculateCrossingFunc: func(request model.CrossingRequest) model.CrossingResponse {
 			return model.CrossingResponse{}
@@ -62,5 +62,72 @@ func TestPostCalculateCrossingError(t *testing.T) {
 
 		assert.Equal(t, http.StatusUnprocessableEntity, resp.Code)
 		assert.Equal(t, expected, actual)
+	})
+
+	t.Run("no hikers", func(t *testing.T) {
+		actual, resp := callEndpoint(`{
+   "bridges":[
+      {
+         "id":"24a433ac-6c34-40cc-951a-3c7c65947c8a",
+         "hikers":[],
+         "length_in_feet":100
+      },
+      {
+         "id":"ceecaf78-64a4-2fbb-7258-822611e76604",
+         "length_in_feet":250,
+         "hikers":[
+            
+         ]
+      },
+      {
+         "id":"9df1f5a2-b9f9-c91b-a115-5b961cf6567b",
+         "length_in_feet":300,
+         "hikers":[
+            
+         ]
+      }
+   ]
+}`)
+
+		expected := model.Error{
+			HttpCode: http.StatusUnprocessableEntity,
+			Message:  "you need at least one hiker",
+		}
+
+		assert.Equal(t, http.StatusUnprocessableEntity, resp.Code)
+		assert.Equal(t, expected, actual)
+	})
+
+	t.Run("one hiker", func(t *testing.T) {
+		_, resp := callEndpoint(`{
+   "bridges":[
+      {
+         "id":"24a433ac-6c34-40cc-951a-3c7c65947c8a",
+         "hikers":[
+            {
+               "id":"44ab4f16-f7bb-716c-449c-67389615e735",
+               "speed_feet_in_minutes":10
+            }
+         ],
+         "length_in_feet":100
+      },
+      {
+         "id":"ceecaf78-64a4-2fbb-7258-822611e76604",
+         "length_in_feet":250,
+         "hikers":[
+            
+         ]
+      },
+      {
+         "id":"9df1f5a2-b9f9-c91b-a115-5b961cf6567b",
+         "length_in_feet":300,
+         "hikers":[
+            
+         ]
+      }
+   ]
+}`)
+
+		assert.Equal(t, http.StatusOK, resp.Code)
 	})
 }

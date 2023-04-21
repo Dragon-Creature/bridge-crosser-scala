@@ -42,6 +42,20 @@ func (re *Rest) PostCalculateCrossing(w http.ResponseWriter, r *http.Request) {
 		})
 		return
 	}
+	atLeastOneHiker := false
+	for _, bridge := range request.Bridges {
+		if len(bridge.Hikers) > 0 {
+			atLeastOneHiker = true
+		}
+	}
+	if atLeastOneHiker == false {
+		RespondError(w, model.Error{
+			HttpCode: http.StatusUnprocessableEntity,
+			Message:  "you need at least one hiker",
+		})
+		return
+	}
+
 	response := re.Service.CalculateCrossing(request)
 	data, err = json.Marshal(response)
 	if err != nil {

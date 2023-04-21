@@ -6,7 +6,7 @@ type CrossingRequest struct {
 
 type Bridge struct {
 	LengthInFeet float64 `json:"length_in_feet" valid:"required,numeric"`
-	Hikers       []Hiker `json:"hikers" valid:"required"`
+	Hikers       []Hiker `json:"hikers"`
 }
 
 type Hiker struct {
