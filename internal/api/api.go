@@ -12,6 +12,8 @@ func Start() error {
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 	r.Post("/api/calculate_crossing", rest.PostCalculateCrossing)
+	fileServer := http.FileServer(http.Dir("./build/"))
+	r.Handle("/*", fileServer)
 	err := http.ListenAndServe(":8080", r)
 	if err != nil {
 		return errors.WithStack(err)
