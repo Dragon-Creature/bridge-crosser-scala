@@ -28,24 +28,35 @@ func CalculateCrossing(request model.CrossingRequest) *model.CrossingResponse {
 		})
 		for len(hikers) > 0 {
 			fastest := hikers[0]
-			companion := hikers[1]
-			travelTime := bridgeLengthInFeet / companion.SpeedFeetInMinutes
-			totalMinutesOfTravel += travelTime
-			bridgeResult.TotalTravelTime += travelTime
-			if len(request.Bridges) != i+1 {
-				request.Bridges[i+1].Hikers = append(request.Bridges[i+1].Hikers, companion)
-			}
-			hikers = remove(hikers, 1)
-			if len(hikers) <= 1 {
+			if len(hikers) == 1 {
+				travelTime := bridgeLengthInFeet / fastest.SpeedFeetInMinutes
+				totalMinutesOfTravel += travelTime
+				bridgeResult.TotalTravelTime += travelTime
+				hikers = remove(hikers, 0)
 				if len(request.Bridges) != i+1 {
 					request.Bridges[i+1].Hikers = append(request.Bridges[i+1].Hikers, fastest)
 				}
-				hikers = remove(hikers, 0)
 			} else {
-				travelTime = bridgeLengthInFeet / fastest.SpeedFeetInMinutes
+				companion := hikers[1]
+				travelTime := bridgeLengthInFeet / companion.SpeedFeetInMinutes
 				totalMinutesOfTravel += travelTime
 				bridgeResult.TotalTravelTime += travelTime
+				if len(request.Bridges) != i+1 {
+					request.Bridges[i+1].Hikers = append(request.Bridges[i+1].Hikers, companion)
+				}
+				hikers = remove(hikers, 1)
+				if len(hikers) <= 1 {
+					if len(request.Bridges) != i+1 {
+						request.Bridges[i+1].Hikers = append(request.Bridges[i+1].Hikers, fastest)
+					}
+					hikers = remove(hikers, 0)
+				} else {
+					travelTime = bridgeLengthInFeet / fastest.SpeedFeetInMinutes
+					totalMinutesOfTravel += travelTime
+					bridgeResult.TotalTravelTime += travelTime
+				}
 			}
+
 		}
 		request.Bridges[i].Hikers = hikers
 		bridgeResults = append(bridgeResults, bridgeResult)
