@@ -78,41 +78,43 @@ function App() {
       {resultRender}
       <div className={"Bridges"}>
         {bridges.map((bridge, idx) => (
-            <div className={"Bridge-Container"}>
-              <p>Bridge {idx+1}</p>
-          <div className={"Bridge"} key={bridge.id}>
-            <p>Length in feet</p>
-            <input
-              type={"text"}
-              value={bridge.length_in_feet}
-              onChange={(e) => {
-                updateLengthInFeet(e.target.value, idx);
-              }}
-            />
-            <button onClick={() => createHiker(bridge, idx)}>Add Hiker</button>
-            {bridge.hikers.map((hiker, idy) => (
-                <div className={"Hiker-Container"}>
-                  <p>Hiker {idy+1}</p>
-              <div className={"Hiker"}>
-                <p>ID</p>
-                <input type={"text"} value={hiker.id} readOnly={true} />
-                <p>Speed feet in minutes</p>
-                <input
-                  type={"text"}
-                  value={hiker.speed_feet_in_minutes}
-                  onChange={(e) => {
-                    updateSpeedInFeet(e.target.value, idx, idy);
-                  }}
-                />
-              </div>
+          <div className={"Bridge-Container"} key={bridge.id}>
+            <p>Bridge {idx + 1}</p>
+            <div className={"Bridge"}>
+              <p>Length in feet</p>
+              <input
+                type={"text"}
+                value={bridge.length_in_feet}
+                onChange={(e) => {
+                  updateLengthInFeet(e.target.value, idx);
+                }}
+              />
+              <button data-testid="add-hiker" onClick={() => createHiker(bridge, idx)}>
+                Add Hiker
+              </button>
+              {bridge.hikers.map((hiker, idy) => (
+                <div className={"Hiker-Container"} key={hiker.id}>
+                  <p>Hiker {idy + 1}</p>
+                  <div className={"Hiker"}>
+                    <p>ID</p>
+                    <input type={"text"} value={hiker.id} readOnly={true} />
+                    <p>Speed feet in minutes</p>
+                    <input
+                      type={"text"}
+                      value={hiker.speed_feet_in_minutes}
+                      onChange={(e) => {
+                        updateSpeedInFeet(e.target.value, idx, idy);
+                      }}
+                    />
+                  </div>
                 </div>
-            ))}
+              ))}
+            </div>
           </div>
-              </div>
         ))}
       </div>
       <div className={"Control-Buttons"}>
-        <button onClick={createBridge}>Add Bridge</button>
+        <button onClick={createBridge} data-testid="add-bridge">Add Bridge</button>
         <button onClick={Submit}>Submit</button>
       </div>
     </div>
