@@ -32,6 +32,10 @@ func CalculateCrossing(request model.CrossingRequest) (*model.CrossingResponse, 
 				if len(hikers) <= 1 {
 					request.Bridges[i+1].Hikers = append(request.Bridges[i+1].Hikers, fastest)
 					hikers = remove(hikers, 0)
+				} else {
+					travelTime = bridgeLengthInFeet / fastest.SpeedFeetInMinutes
+					totalMinutesOfTravel += travelTime
+					bridgeTime[i] += travelTime
 				}
 			} else if len(request.Bridges) == i+1 {
 				travelTime := bridgeLengthInFeet / companion.SpeedFeetInMinutes
@@ -40,6 +44,10 @@ func CalculateCrossing(request model.CrossingRequest) (*model.CrossingResponse, 
 				hikers = remove(hikers, 1)
 				if len(hikers) <= 1 {
 					hikers = remove(hikers, 0)
+				} else {
+					travelTime = bridgeLengthInFeet / fastest.SpeedFeetInMinutes
+					totalMinutesOfTravel += travelTime
+					bridgeTime[i] += travelTime
 				}
 			}
 		}

@@ -61,11 +61,11 @@ func TestCalculateCrossing(t *testing.T) {
 	const float64EqualityThreshold = 1e-9
 
 	expected := model.CrossingResponse{
-		TotalTravelTime: 261,
+		TotalTravelTime: 278,
 		BridgeTimeTravel: []float64{
-			17,
-			142.5,
-			101.5,
+			19,
+			150,
+			109,
 		},
 	}
 	assert.InDelta(t, expected.TotalTravelTime, response.TotalTravelTime, float64EqualityThreshold)
