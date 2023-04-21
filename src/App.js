@@ -3,6 +3,7 @@ import React, {useState} from "react";
 import uuid from 'react-uuid'
 
 function App() {
+    const [errorMessage, setErrorMessage] = useState('');
     const [bridges, setBridges] = useState([{ id: uuid(), hikers: []}]);
     const [result, setResult] = useState(undefined);
 
@@ -32,17 +33,20 @@ function App() {
     }
 
     const Submit = () => {
+        setErrorMessage('');
+        setResult(undefined);
         fetch('/api/calculate_crossing', {
             method: 'post',
             body: JSON.stringify({bridges})
         })
             .then((response) => {
                 if (response.ok) {
-                    response.json().then((response) => setResult(response))
+                    response.json().then((response) => setResult(response));
+                } else {
+                    response.json().then((response) => setErrorMessage(response.message));
                 }
-                response.json().then((response) => console.log(response))
             })
-            .catch((err) => console.log(err))
+            .catch((err) => setErrorMessage("unexpected error: unable to connect to backend"))
     }
 
     let resultRender = <div></div>
@@ -66,6 +70,7 @@ function App() {
     }
   return (
     <div className="App">
+        {errorMessage}
         {resultRender}
         {bridges.map((bridge, idx) =>
             <div key={bridge.id}>
