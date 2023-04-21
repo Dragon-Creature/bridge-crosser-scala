@@ -1,0 +1,14 @@
+[Unit]
+Description=bridge crosser scala service
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/bridge-crosser-scala
+ExecStart=/opt/bridge-crosser-scala/app
+Restart=always
+
+
+[Install]
+WantedBy=multi-user.target
+RequiredBy=network.target

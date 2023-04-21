@@ -32,4 +32,3 @@ test("click add hiker", () => {
   linkElement = screen.getByText(/hiker 2/i);
   expect(linkElement).toBeInTheDocument();
 });
-

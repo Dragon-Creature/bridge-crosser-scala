@@ -26,3 +26,8 @@ div.Control-Buttons {
   justify-content: center;
   display: flex;
 }
+
+p.Error-Message {
+  text-align: center;
+  color: red;
+}

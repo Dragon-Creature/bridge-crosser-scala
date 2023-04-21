@@ -43,11 +43,21 @@ function App() {
         if (response.ok) {
           response.json().then((response) => setResult(response));
         } else {
-          response.json().then((response) => setErrorMessage(response.message));
+          response
+            .json()
+            .then((response) =>
+              setErrorMessage(
+                <p className={"Error-Message"}>{response.message}</p>
+              )
+            );
         }
       })
       .catch((err) =>
-        setErrorMessage("unexpected error: unable to connect to backend")
+        setErrorMessage(
+          <p className={"Error-Message"}>
+            unexpected error: unable to connect to backend
+          </p>
+        )
       );
   };
 
@@ -89,7 +99,10 @@ function App() {
                   updateLengthInFeet(e.target.value, idx);
                 }}
               />
-              <button data-testid="add-hiker" onClick={() => createHiker(bridge, idx)}>
+              <button
+                data-testid="add-hiker"
+                onClick={() => createHiker(bridge, idx)}
+              >
                 Add Hiker
               </button>
               {bridge.hikers.map((hiker, idy) => (
@@ -114,7 +127,9 @@ function App() {
         ))}
       </div>
       <div className={"Control-Buttons"}>
-        <button onClick={createBridge} data-testid="add-bridge">Add Bridge</button>
+        <button onClick={createBridge} data-testid="add-bridge">
+          Add Bridge
+        </button>
         <button onClick={Submit}>Submit</button>
       </div>
     </div>
