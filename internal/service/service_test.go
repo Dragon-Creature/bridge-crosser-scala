@@ -3,12 +3,11 @@ package service
 import (
 	"git.ssns.se/git/frozendragon/bridge-crosser-scala/internal/model"
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 	"testing"
 )
 
 func TestCalculateCrossing(t *testing.T) {
-	response, err := CalculateCrossing(model.CrossingRequest{
+	response := CalculateCrossing(model.CrossingRequest{
 		Bridges: []model.Bridge{
 			{
 				LengthInFeet: 100,
@@ -55,8 +54,6 @@ func TestCalculateCrossing(t *testing.T) {
 			},
 		},
 	})
-	require.NoError(t, err)
-
 	const float64EqualityThreshold = 1e-9
 
 	expected := model.CrossingResponse{

@@ -36,8 +36,12 @@ function App() {
             method: 'post',
             body: JSON.stringify({bridges})
         })
-            .then((response) => response.json())
-            .then((response) => setResult(response))
+            .then((response) => {
+                if (response.ok) {
+                    response.json().then((response) => setResult(response))
+                }
+                response.json().then((response) => console.log(response))
+            })
             .catch((err) => console.log(err))
     }
 
