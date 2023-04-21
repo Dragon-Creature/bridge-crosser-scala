@@ -1,5 +1,6 @@
 .idea
 app
+deploy.tar.gz
 
 # dependencies
 /node_modules

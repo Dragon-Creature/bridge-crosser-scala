@@ -4,14 +4,21 @@ div.Bridges {
   flex-wrap: wrap;
 }
 
-div.Bridge {
+div.Bridge-Container {
   margin: 2em;
+
+}
+
+div.Bridge {
   padding: 1em;
   border: black 2px solid;
 }
 
-div.Hiker {
+div.Hiker-Container {
   margin: 2em;
+}
+
+div.Hiker {
   padding: 1em;
   border: black 2px solid;
 }
